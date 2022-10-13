@@ -7,6 +7,7 @@ def validate(input: str) -> bool:
         if (ch in opens):
             stack.append(ch)
         if (ch in closes):
+            if (len(stack) == 0): return False
             bracket = stack.pop()
             if (bracket != opens[closes.index(ch)]):
                 return False
@@ -21,6 +22,7 @@ if (__name__ == "__main__"):
         "{",
         "{([][][])[]}",
         ":{[[[]]]}:",
+        ")()(",
     )
 
     for input in inputs:
