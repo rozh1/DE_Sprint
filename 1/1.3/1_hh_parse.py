@@ -42,11 +42,15 @@ try:
             region = vacancy_page_soupe.find(
                 attrs={"data-qa": "vacancy-view-raw-address"})
 
+            if region == None:
+                region = vacancy_page_soupe.find(
+                    attrs={"data-qa": "vacancy-view-location"})
+
             vacancy = {
                 "title": get_tag_text(title),
                 "work expeirence": get_tag_text(expeirence),
                 "salary": get_tag_text(salary),
-                "region": get_tag_text(region)
+                "region": get_tag_text(region).split(",")[0] # отбрасывание адреса
             }
 
             vacancies.append(vacancy)
