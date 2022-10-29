@@ -8,3 +8,16 @@
 
 
 Хобби: разработка программного обеспечения, программно-аппараратных комплексов, средств обработки BigData
+
+Последный коммит:
+
+```
+# git log
+
+commit 06c3b4d7d509c5281a2bb843cf3b80c3d6debbd3 (HEAD -> develop, origin/develop)
+Author: Roman Klassen <klassen.roman@comp-gluk.ru>
+Date:   Sat Oct 29 12:20:15 2022 +0300
+
+    Практика 2.1. Часть 2
+
+```
