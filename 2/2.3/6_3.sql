@@ -1,0 +1,1 @@
+select id from public.employees where "position" = 'Разработчик';
