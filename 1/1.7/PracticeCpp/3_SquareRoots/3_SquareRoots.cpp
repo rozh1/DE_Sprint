@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cmath>
 using namespace std;
 
 int main() {
@@ -13,9 +14,9 @@ int main() {
 	d = b * b - 4 * a * c;
 
 	if (d >= 0) {
-		x1 = (-b + sqrt(d)) / 2 * a;
+		x1 = (-b + sqrt(d)) / (2 * a);
 		cout << "x1=" << x1 << "\n";
-		x2 = (-b - sqrt(d)) / 2 * a;
+		x2 = (-b - sqrt(d)) / (2 * a);
 		cout << "x2=" << x2 << "\n";
 	}
 	else {
