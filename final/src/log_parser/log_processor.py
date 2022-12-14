@@ -101,6 +101,7 @@ class LogProcessor:
         """Объединение результатов с другим LogProcessor"""
         self._bot_count += other._bot_count
         self._log_count += other._log_count
+        self._error_count += other._error_count
         self._users = self._users.union(other._users)
 
         for (key, value) in other._devices.items():
