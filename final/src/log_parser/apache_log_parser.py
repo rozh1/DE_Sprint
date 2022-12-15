@@ -58,7 +58,7 @@ class ApacheLogParser:
 
         # 22/Jan/2019:03:56:17 +0330 -> 22/Jan/2019 03:56:17 +0330
         time = date_parse(time[:11] + " " + time[12:])
-        time = time.timestamp()
+        time = time.timestamp() # время в формате unix timestamp (int)
 
         return LogEntity(ip, full_info, user, time, method, address, protocol, status, size, referrer, user_agent, addition)
 

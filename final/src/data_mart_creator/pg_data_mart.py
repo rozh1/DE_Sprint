@@ -9,7 +9,7 @@ _DEVICES_TABLE_DROP_QUERY = """DROP TABLE IF EXISTS public.devices;"""
 _DEVICES_TABLE_CREATE_QUERY = """CREATE TABLE public.devices
 (
     id serial,
-    name character varying(50) NOT NULL,
+    name character varying NOT NULL,
     use_count integer NOT NULL,
     user_count integer NOT NULL,
     not_200_answers integer NOT NULL,
