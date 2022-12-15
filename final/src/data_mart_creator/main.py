@@ -10,7 +10,7 @@ import json
 from pg_data_mart import PgDataMart
 
 HELP_MSG = '''
-Использование: main.py /home/admin/result.json 4
+Использование: main.py /home/admin/result.json
     /var/log/apache2/access.log - путь к файлу результата разбора лога
     '''
 
@@ -23,6 +23,8 @@ def get_common_params(data: dict) -> tuple:
         ("error_count", data["error_count"]),
         ("bot_count", data["bot_count"]),
         ("user_count", data["user_count"]),
+        ("bad_device_name_count", data["bad_device_name_count"]),
+        ("bad_browser_name_count", data["bad_browser_name_count"]),
     )
 
 

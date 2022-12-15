@@ -1,6 +1,7 @@
 """Модуль обработки данных журнала"""
 
 from log_entity import LogEntity
+import re
 
 
 class LogProcessor:
@@ -13,11 +14,44 @@ class LogProcessor:
         self._log_count = 0
         self._bot_count = 0
         self._error_count = 0
+        self._bad_device_name_count = 0
+        self._bad_browser_name_count = 0
+
+        self._hex_pattern = re.compile(r"\\x[0-9a-fA-F][0-9a-fA-F]")
+        self._question_pattern = re.compile(r" \?+")
+
+    def __trim_device_name(self, device: str) -> str:
+        is_bad = False
+        if (self._hex_pattern.search(device)):
+            device = self._hex_pattern.sub("", device)
+            is_bad = True
+
+        if (self._question_pattern.search(device)):
+            device = self._question_pattern.sub("", device)
+            is_bad = True
+
+        if (is_bad):
+            self._bad_device_name_count += 1
+        return device.strip()
+
+    def __trim_browser_name(self, browser: str) -> str:
+        is_bad = False
+        if (self._hex_pattern.search(browser)):
+            browser = self._hex_pattern.sub("", browser)
+            is_bad = True
+
+        if (self._question_pattern.search(browser)):
+            browser = self._question_pattern.sub("", browser)
+            is_bad = True
+
+        if (is_bad):
+            self._bad_browser_name_count += 1
+        return browser.strip()
 
     def __process_device(self, log: LogEntity) -> str:
         """Обработчик устройства"""
 
-        device = log.get_device()
+        device = self.__trim_device_name(log.get_device())
 
         if (device == "Other"):
             device = log.get_os()
@@ -39,7 +73,7 @@ class LogProcessor:
     def __process_browser(self, log: LogEntity, device: str) -> None:
         """Обработчик браузера"""
 
-        browser = log.get_browser()
+        browser = self.__trim_browser_name(log.get_browser())
         browsers = self._devices[device]["browsers"]
         user = log.get_user_key()
         if (browser not in browsers):
@@ -102,6 +136,8 @@ class LogProcessor:
         self._bot_count += other._bot_count
         self._log_count += other._log_count
         self._error_count += other._error_count
+        self._bad_browser_name_count += other._bad_browser_name_count
+        self._bad_device_name_count += other._bad_device_name_count
         self._users = self._users.union(other._users)
 
         for (key, value) in other._devices.items():
@@ -121,6 +157,9 @@ class LogProcessor:
             "error_count": int - количество необработанных записей,
             "bot_count": int - количество роботов в журнале,
             "user_count": int - количество уникальных пользователей (IP), исключая роботов,
+            "device_count": int - количество уникальных устройств,
+            "bad_device_name_count": int - количество "плохих" (содержащих непечатные символы) названий устройств
+            "bad_browser_name_count": int - количество "плохих" названий браузеров
             "devices": {
                 "Linux": { // - название устройства или ОС
                     "use_count": int - количество записей, относящихся к устройству,
@@ -163,5 +202,8 @@ class LogProcessor:
             "error_count": self._error_count,
             "bot_count": self._bot_count,
             "user_count": user_count,
+            "bad_device_name_count": self._bad_device_name_count,
+            "bad_browser_name_count": self._bad_browser_name_count,
+            "device_count": len(devices),
             "devices": devices
         }
