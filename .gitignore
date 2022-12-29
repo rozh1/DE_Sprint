@@ -127,3 +127,10 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+4/4.1/gender_submission.csv
+4/4.1/practice copy.ipynb
+.gitignore
+final/result.json
+4/4.2/application_data.csv
+4/4.2/columns_description.xls
+4/4.2/previous_application.csv
